@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import App from './app.vue'
 
-import './assets/styles/test.css'
-import './assets/img/2333.png'
+import './assets/styles/global.styl'
+// import './assets/img333.png'
 
 const root = document.createElement('div')
 document.body.appendChild(root)

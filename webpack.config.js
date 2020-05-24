@@ -1,7 +1,7 @@
 const path = require('path')
 const HTMLPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
-const { VueLoaderPlugin } = require("vue-loader")
+const VueLoaderPlugin = require("vue-loader/lib/plugin")
 const isDev = process.env.NODE_ENV === 'development'
 
 const config = {
@@ -18,8 +18,13 @@ const config = {
                 loader: 'vue-loader'
             },
             {
-                test: /\.jsx$/,
-                loader: 'babel-loader'
+                test: /\.js.?$/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
+                }
             },
             {
                 test: /\.css$/, 
@@ -29,27 +34,29 @@ const config = {
                 ]
             },
             {
-                test: /\.styl$/,
+                test: /\.styl(us)?$/,
                 use: [
-                    'style-loaer',
+                    'vue-style-loader',
                     'css-loader',
                     {
                         loader: 'postcss-loader',
                         options: {
                             sourceMap: true,
+                            importLoaders: 1
                         }
                     },
                     'stylus-loader',
                 ]
             },
             {
-                test: /\.(png|jpeg|jpg|svm)$/,
+                test: /\.(png|jpeg|jpg|svg)$/,
                 use: [
                     {
                         loader: 'url-loader',
                         options: {
                             limit: 1024,
-                            name: '[name].[ext]'
+                            name: '[name].[ext]',
+                            outputPath: './assets/img/'
                         }
                     }
                 ]
